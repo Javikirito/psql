@@ -1,7 +1,7 @@
 <<...creating table country...>>
 create table country(
-task(# ID int primary key,
-task(# NAME varchar(15) not null);
+ID int primary key,
+NAME varchar(15) not null);
 
 <<...inserting values to country...>>
 insert into  country ("id","name")
