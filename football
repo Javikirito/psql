@@ -106,11 +106,13 @@ select * from players;
 
 _________________________________________________________________________
 
-(1):
+(1):Write a query to find all clubs from ‘England’
+
 select a.name as club,b.name as country
-from club a,country b
-where a.country_id=b.id
-and b.name='England';
+from club a 
+inner join country b
+on a.country_id=b.id
+where b.name='England';
 
      club      | country 
 ---------------+---------
@@ -121,12 +123,15 @@ and b.name='England';
 
 _________________________________________________________________________
 
-(2):
+(2):Write a query to display all the players whose coach is from the same country
+
 select players.name, players.club_id,club.coach_id,players.country_id 
-  from players,club,coach 
-  where players.club_id = club.id 
-  and club.coach_id = coach.id 
-  and players.country_id=coach.country_id;
+  from players
+  where players.club_id=(
+  select id from club
+  where club.coach_id=(
+  select id from coach 
+  where players.country_id=coach.country_id));
 
  name  | club_id | coach_id | country_id 
 -------+---------+----------+------------
@@ -135,11 +140,13 @@ select players.name, players.club_id,club.coach_id,players.country_id
 
 _________________________________________________________________________
 
-(3):
+(3):Write a query to find all players whose club is from the same country
+
 select players.name,players.club_id,players.country_id 
-from players,club 
-where players.club_id = club.id 
-and players.country_id = club.country_id;
+from players
+inner join club 
+on players.club_id = club.id 
+players.country_id = club.country_id;
 
  name | club_id | country_id 
 ------+---------+------------
@@ -149,7 +156,8 @@ and players.country_id = club.country_id;
 
 ________________________________________________________________________
 
-(4):
+(4):Write a query to find all coaches who are coaching for teams from different countries and ages below 59 order by age.
+
 select * from coach
 where country_id not in (select country_id from club
 where coach_id=coach.id) 
@@ -164,7 +172,8 @@ order by age;
 (3 rows)
 ______________________________________________________________________
 
-(5):
+(5):Write a query to create a view of the top 5 goals scored by player, country, age, goal, club, and coach 
+
 select players.name as player,country.name as country, players.age, club.name as club, players.goals  
 from players,club,country 
 where players.country_id = country.id 
