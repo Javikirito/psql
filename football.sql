@@ -174,10 +174,10 @@ ______________________________________________________________________
 
 (5):Write a query to create a view of the top 5 goals scored by player, country, age, goal, club, and coach 
 
-select players.name as player,country.name as country, players.age, club.name as club, players.goals  
-from players,club,country 
-where players.country_id = country.id 
-and players.club_id = club.id 
+select players.name as player,country.name as country, players.age, club.name as club, players.goals
+from players
+inner join club on players.club_id=club.id
+inner join country on players.country_id=country.id
 order by goals desc limit 5;
 
  player  |  country  | age |     club     | goals 
