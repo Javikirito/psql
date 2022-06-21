@@ -156,13 +156,9 @@ ________________________________________________________________________________
 
 select *
 from movie
-where mov_id=(
-select mov_id
-from movie_cast
-where act_id=(
-select act_id
-from actors
-where act_fname='Tim' and act_lname='Robbins'));
+inner join movie_cast on movie.mov_id=movie_cast.mov_id
+inner join actors on movie_cast.act_id=actors.act_id
+where act_fname='Tim' and act_lname='Robbins';
 
  mov_id |        mov_title         | mov_year | mov_time | mov_lang | mov_dt_rel | mov_rel_country 
 --------+--------------------------+----------+----------+----------+------------+-----------------
